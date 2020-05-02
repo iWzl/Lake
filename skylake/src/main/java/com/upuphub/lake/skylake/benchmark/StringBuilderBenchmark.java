@@ -26,9 +26,11 @@ import java.util.concurrent.TimeUnit;
 public class StringBuilderBenchmark {
 
     public static void main(String[] args) throws RunnerException {
+        String userDirPath = System.getProperty("user.dir");
+        String benchmarkLogPath = String.format("%s/%s",userDirPath,"skylake/src/main/java/com/upuphub/lake/skylake/benchmark/StringBenchmark.log");
         Options options = new OptionsBuilder()
                 .include(StringBuilderBenchmark.class.getSimpleName())
-                .output("E:/0_JavaProject/1_OpenHub/lake/skylake/src/main/java/com/upuphub/lake/skylake/benchmark/StringBenchmark.log")
+                .output(benchmarkLogPath)
                 .build();
         new Runner(options).run();
     }
