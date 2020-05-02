@@ -8,6 +8,8 @@
 # BlueJ files
 *.ctxt
 
+.idea
+
 *.iml
 
 ./target
