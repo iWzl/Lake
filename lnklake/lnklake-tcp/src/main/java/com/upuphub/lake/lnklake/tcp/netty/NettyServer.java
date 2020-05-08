@@ -42,6 +42,7 @@ public class NettyServer {
                 //使用指定的端口设置套接字地址
                 .localAddress(new InetSocketAddress(port))
 
+                // 已连接但未进行accept处理的SOCKET队列大小
                 //服务端可连接队列数,对应TCP/IP协议listen函数中backlog参数
                 .option(ChannelOption.SO_BACKLOG, 1024)
 
