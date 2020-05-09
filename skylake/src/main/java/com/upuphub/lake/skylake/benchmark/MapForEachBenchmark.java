@@ -17,18 +17,18 @@ import java.util.concurrent.TimeUnit;
  * Map 遍历方式的执行效率测试
  *
  */
-@BenchmarkMode(Mode.All)
-@Warmup(iterations = 2,time = 2, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 20,time = 20,timeUnit = TimeUnit.SECONDS)
+@BenchmarkMode(Mode.Throughput)
+@Warmup(iterations = 1,time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 30,time = 20,timeUnit = TimeUnit.SECONDS)
 @Threads(8)
 @Fork(2)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @State(Scope.Thread)
 public class MapForEachBenchmark {
-    private static final Map<String,String> stringMap = new HashMap<>(10000000);
+    private static final Map<String,String> stringMap = new HashMap<>(10);
 
     static {
-        for (int i = 0; i < 10000000; i++) {
+        for (int i = 0; i < 10; i++) {
             stringMap.put(String.format("key-%s",i),String.format("value-%s",i));
         }
     }
