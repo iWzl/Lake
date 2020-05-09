@@ -16,6 +16,17 @@ import java.util.concurrent.TimeUnit;
  *
  * Map 遍历方式的执行效率测试
  *
+ * 压力测试结果
+ *
+ * Benchmark                                 Mode  Cnt       Score      Error   Units
+ * MapForEachBenchmark.forEntrySet          thrpt   60  112688.543 ± 7006.665  ops/ms
+ * MapForEachBenchmark.forEntrySetIterator  thrpt   60   84463.782 ± 1687.194  ops/ms
+ * MapForEachBenchmark.forKeySet            thrpt   60   41092.944 ± 1574.240  ops/ms
+ * MapForEachBenchmark.forKeySetIterator    thrpt   60   55380.712 ± 2889.469  ops/ms
+ * MapForEachBenchmark.forLambda            thrpt   60   45413.544 ±  595.175  ops/ms
+ * MapForEachBenchmark.forParallelStream    thrpt   60    4748.341 ±  114.635  ops/ms
+ * MapForEachBenchmark.forStreams           thrpt   60   45232.937 ±  180.460  ops/ms
+ *
  */
 @BenchmarkMode(Mode.Throughput)
 @Warmup(iterations = 1,time = 1, timeUnit = TimeUnit.SECONDS)
