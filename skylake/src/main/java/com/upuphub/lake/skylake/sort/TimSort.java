@@ -12,6 +12,8 @@ import java.util.Comparator;
  * 在最坏的情况下，这种类型需要临时存储空间来存放n / 2个对象引用;
  * 在最好的情况下，它只需要很小的恒定空间。
  *
+ * https://www.jianshu.com/p/892ebd063ad9
+ *
  * @param <T>
  */
 public class TimSort<T> {
