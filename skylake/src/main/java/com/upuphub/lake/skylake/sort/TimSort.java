@@ -29,62 +29,55 @@ public class TimSort<T> {
     private static final int MIN_MERGE = 32;
 
     /**
-     * The array being sorted.
+     * 将会被排序的数组对象
      */
     private final T[] a;
 
     /**
-     * The comparator for this sort.
+     * 排序中需要的比较器
      */
     private final Comparator<? super T> c;
 
     /**
-     * When we get into galloping mode, we stay there until both runs win less
-     * often than MIN_GALLOP consecutive times.
+     * 判断数据顺序连续性的阈值
+     * 当切换到galloping模式时, 会保证两尺正常运行的阈值小于MIN_GALLOP
      */
     private static final int  MIN_GALLOP = 7;
 
     /**
-     * This controls when we get *into* galloping mode.  It is initialized
-     * to MIN_GALLOP.  The mergeLo and mergeHi methods nudge it higher for
-     * random data, and lower for highly structured data.
+     * 用户控制什么时候进入galloping模式.
+     * 初始化为MIN_GALLOP的值
      */
     private int minGallop = MIN_GALLOP;
 
     /**
-     * Maximum initial size of tmp array, which is used for merging.  The array
-     * can grow to accommodate demand.
-     *
-     * Unlike Tim's original C version, we do not allocate this much storage
-     * when sorting smaller arrays.  This change was required for performance.
+     * 归并排序中临时数组的最大长度，数组的长度也可以根据需求增长。
+     * 与C语言中的实现方式不同，对于相对较小的数组，不用这么大的临时数组对性能有显著的影响
      */
     private static final int INITIAL_TMP_STORAGE_LENGTH = 256;
 
     /**
-     * Temp storage for merges. A workspace array may optionally be
-     * provided in constructor, and if so will be used as long as it
-     * is big enough.
+     * 临时数组，根据泛型的内容可知，实际的存储要用Object[],不能用T[].
+     * 可以在构造函数中提供一个工作区数组
      */
     private T[] tmp;
     private int tmpBase; // base of tmp array slice
     private int tmpLen;  // length of tmp array slice
 
     /**
-     * A stack of pending runs yet to be merged.  Run i starts at
-     * address base[i] and extends for len[i] elements.  It's always
-     * true (so long as the indices are in bounds) that:
+     * 栈中待归并的run的数量。一个run i的范围从runBase[i]开始，一直延续到runLen[i]。
+     * 下面这个根据前一个run的结尾总是下一个run的开头。
      *
      *     runBase[i] + runLen[i] == runBase[i + 1]
      *
-     * so we could cut the storage for this, but it's a minor amount,
-     * and keeping all the info explicit simplifies the code.
+     * 因此我们可以为此减少存储量，并保持所有信息明确可简化代码。
      */
-    private int stackSize = 0;  // Number of pending runs on stack
+    private int stackSize = 0;  // 栈中的RUN数量
     private final int[] runBase;
     private final int[] runLen;
 
     /**
-     * Creates a TimSort instance to maintain the state of an ongoing sort.
+     * 为了保存一次排序过程中的状态变量创建这个实例私有实例。
      *
      * @param a the array to be sorted
      * @param c the comparator to determine the order of the sort
